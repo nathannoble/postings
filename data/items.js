@@ -29,15 +29,16 @@ const getDynamoDBClient = () => {
       return Items;
     },
     get: async itemId => {
-      const { Items } = await getDynamoDBClient()
-        .scan({
-          TableName
+      const { Item } = await getDynamoDBClient()
+        .get({
+          TableName,
+          Key:{
+            "itemId":Number(itemId)
+          }
         })
         .promise();
   
-      const item = Items.find(item => item.itemId == itemId);
-  
-      return item;
+      return Item;
     },
     create: async itemDescription => {
       await getDynamoDBClient()
